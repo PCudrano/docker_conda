@@ -91,7 +91,7 @@ Your conda environments are mounted in `/envs` inside your container, and perman
 
 #### Creating a New Conda Environment
 
-1. **Initialize Conda (if needed)**:
+1. **Initialize Conda (NOT needed if using the provided bashrc)**:
 
    ```bash
    conda init bash
