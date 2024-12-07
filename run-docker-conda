@@ -4,6 +4,7 @@
 IMAGE_NAME="$(whoami)/cuda-miniconda:latest"
 CONTAINER_NAME=""  # Leave empty to let run-docker handle its default
 MEMORY_LIMIT="" # Memory limit
+VSCODE=0  # vscode mode
 PROJECT_DIR="$(pwd)"  # Default to current directory
 CONDA_ENV_DIR="/multiverse/storage/$(whoami)/conda_envs/"
 DOCKER_ARGS=""
@@ -43,6 +44,7 @@ print_help() {
     echo "  --conda-envs <envs_dir>    Path to the directory where conda environments are stored (default: /multiverse/storage/<username>/conda_envs/)."
     echo "  --docker-args <args>       Additional arguments to pass to Docker."
     echo "  --memory-limit <limit>     Specify the memory limit for the container (default: 32g)."
+    echo "  --vscode                   Mounts vscode server folder in /vscode. To be used with vscode-enabled image."
     echo "  -h, --help                 Show this help message."
     echo ""
     echo "Positional Arguments:"
@@ -84,6 +86,10 @@ while [[ $# -gt 0 ]]; do
             MEMORY_LIMIT="$2"
             shift 2
             ;;
+        --vscode)
+            VSCODE=1
+            shift 1
+            ;;
         -h|--help)
             print_help
             exit 0
@@ -118,6 +124,10 @@ FINAL_DOCKER_ARGS+="-e USER_NAME=${USER_NAME} -e GROUPS=${USER_GROUPS} "
 FINAL_DOCKER_ARGS+="-v ${PROJECT_DIR}:/exp "
 FINAL_DOCKER_ARGS+="-v ${CONDA_ENV_DIR}:/envs "
 FINAL_DOCKER_ARGS+="-m ${MEMORY_LIMIT:-32g} "
+if [[ -n "${VSCODE}" ]]; then
+    FINAL_DOCKER_ARGS+="-v /home/${USER_NAME}/.vscode-server:/vscode "
+    IMAGE_NAME="$(whoami)/cuda-miniconda:vscode"
+fi
 FINAL_DOCKER_ARGS+="${RUNCONFIGS_DOCKER_ARGS}"
 
 # Add container name if specified

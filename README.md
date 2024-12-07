@@ -245,6 +245,26 @@ Feel free to customize and extend this setup to suit your needs. You can create 
 
   If you make improvements that could benefit others, consider sharing them.
 
+## VSCode persistence
+If you plan on attaching VSCode to a running docker container, you should avoid installing a vscode-server from scratch each time a new container is spawned. You can avoid this by ensuring vscode-server is mounted from storage.
+
+To enable this, you can extend your image. A working example can be found in directory `vscode/`. Just make sure to edit the first line `FROM <username>/cuda-miniconda:latest` with the name of your base image.
+You can build this extension as above, running:
+
+```bash
+cd vscode
+docker build -t $(whoami)/cuda-miniconda:vscode .
+```
+
+You can now run a container with VSCode persistence adding flag `--vscode` to your `run-docker-conda` call:
+```bash
+run-docker-conda '0' '0-4' --vscode /bin/bash
+```
+By default, when presented with `--vscode` option, `run-docker-conda` will try to run image `<username>/cuda-miniconda:vscode`. If you build your vscode image with a different name, be sure to pass the correct image name using argument `--image`.
+```bash
+run-docker-conda '0' '0-4' --vscode --image my/vscode:image /bin/bash
+```
+
 # Bonus
 ### Docker stats per user
 
