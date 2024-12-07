@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Function to display help
+show_help() {
+    echo "Usage: docker-stats.sh [-u USER] [-h]"
+    echo
+    echo "Options:"
+    echo "  -u USER   Specify the user whose containers to monitor."
+    echo "            If not specified, monitors all containers."
+    echo "  -h        Show this help message and exit."
+}
+
+# Initialize user variable as empty
+USER=""
+
+# Parse options using getopts
+while getopts ":u:h" opt; do
+    case $opt in
+        u)
+            USER="$OPTARG"
+            ;;
+        h)
+            show_help
+            exit 0
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG" >&2
+            show_help
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument." >&2
+            show_help
+            exit 1
+            ;;
+    esac
+done
+
+# Check if a user was specified
+if [[ -n "$USER" ]]; then
+    # Filter containers by user
+    docker stats $(docker ps --format '{{.ID}}' -f "name=$USER")
+else
+    # Monitor all containers
+    docker stats
+fi
+

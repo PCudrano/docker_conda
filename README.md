@@ -244,3 +244,17 @@ Feel free to customize and extend this setup to suit your needs. You can create 
 - **Submitting Improvements**:
 
   If you make improvements that could benefit others, consider sharing them.
+
+# Bonus
+### Docker stats per user
+
+Script to run `docker stats` only on containers of selected user:
+```bash
+docker-stats -u <username>
+```
+
+You can install this script in your local bin folder:
+```bash
+cp docker-stats ~/.local/bin/docker-stats
+```
+
