@@ -2,38 +2,45 @@
 
 # Function to display help
 show_help() {
-    echo "Usage: docker-stats.sh [-u USER] [-h]"
+    echo "Usage: docker-stats.sh [-u USER | --me] [-h]"
     echo
     echo "Options:"
     echo "  -u USER   Specify the user whose containers to monitor."
     echo "            If not specified, monitors all containers."
+    echo "  --me      Monitor containers belonging to the current user ($(whoami))."
     echo "  -h        Show this help message and exit."
 }
 
 # Initialize user variable as empty
 USER=""
 
-# Parse options using getopts
-while getopts ":u:h" opt; do
-    case $opt in
-        u)
-            USER="$OPTARG"
+# Parse options
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -u)
+            if [[ -n $2 && $2 != -* ]]; then
+                USER="$2"
+                shift
+            else
+                echo "Option -u requires an argument." >&2
+                show_help
+                exit 1
+            fi
             ;;
-        h)
+        --me)
+            USER=$(whoami)
+            ;;
+        -h)
             show_help
             exit 0
             ;;
-        \?)
-            echo "Invalid option: -$OPTARG" >&2
-            show_help
-            exit 1
-            ;;
-        :)
-            echo "Option -$OPTARG requires an argument." >&2
+        *)
+            echo "Invalid option: $1" >&2
             show_help
             exit 1
             ;;
     esac
+    shift
 done
 
 # Check if a user was specified
