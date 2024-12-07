@@ -11,6 +11,7 @@ GROUPS=${GROUPS:-}
 echo "Setting up user $USER_NAME ($USER_ID:$GROUP_ID) with groups $GROUPS"
 
 # Create primary group if it doesn't exist
+echo "- Creating primary group $USER_NAME:$GROUP_ID..."
 if ! getent group "$GROUP_ID" >/dev/null 2>&1; then
     groupadd -g "$GROUP_ID" "$USER_NAME"
 else
@@ -22,6 +23,7 @@ else
 fi
 
 # Create user if it doesn't exist
+echo "- Creating user $USER_NAME:$USER_ID..."
 if ! id -u "$USER_ID" >/dev/null 2>&1; then
     useradd -m -u "$USER_ID" -g "$GROUP_ID" -s /bin/bash "$USER_NAME"
 fi
@@ -33,6 +35,7 @@ if [ -n "$GROUPS" ]; then
         GROUP_NAME=$(echo "$GROUP" | cut -d: -f1)
         GROUP_GID=$(echo "$GROUP" | cut -d: -f2)
         # Create group if it doesn't exist
+        echo "- Creating group $GROUP_NAME:$GROUP_GID..."
         if ! getent group "$GROUP_GID" >/dev/null 2>&1; then
             groupadd -g "$GROUP_GID" "$GROUP_NAME"
         else
@@ -48,9 +51,10 @@ if [ -n "$GROUPS" ]; then
 fi
 
 # Ensure ownership of mounted directories
-chown -R "$USER_ID":"$GROUP_ID" /exp /envs
+chown "$USER_ID":"$GROUP_ID" /exp /envs
 
 # Suppress login messages
+echo "- Fixing login message..."
 touch "/home/$USER_NAME/.hushlogin"
 chown "$USER_ID:$GROUP_ID" "/home/$USER_NAME/.hushlogin"
 
