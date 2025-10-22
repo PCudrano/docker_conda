@@ -58,6 +58,11 @@ echo "- Fixing login message..."
 touch "/home/$USER_NAME/.hushlogin"
 chown "$USER_ID:$GROUP_ID" "/home/$USER_NAME/.hushlogin"
 
+# Set up vscode folder
+echo "Setting up vscode..."
+ln -s /vscode /home/$USER_NAME/.vscode-server
+chown -R "$USER_ID":"$GROUP_ID" /home/$USER_NAME/.vscode-server
+
 echo "Running $@ as user $USER_NAME"
 
 # Switch to the created user and execute the provided command

@@ -1,4 +1,5 @@
 # Base image with CUDA and Python installed
+# FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu20.04
 FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu20.04
 
 # Set environment variables
@@ -45,6 +46,10 @@ RUN mkdir -p /exp /envs && \
 # Add entrypoint script to create user
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 755 /usr/local/bin/entrypoint.sh
+
+# Add entrypoint script to create user
+COPY entrypoint.sh /usr/local/bin/entrypoint-vscode.sh
+RUN chmod 755 /usr/local/bin/entrypoint-vscode.sh
 
 # Set default bashrc
 COPY bashrc /etc/bash.bashrc
