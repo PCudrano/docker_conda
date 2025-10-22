@@ -6,7 +6,7 @@ CONTAINER_NAME=""  # Leave empty to let run-docker handle its default
 MEMORY_LIMIT="" # Memory limit
 VSCODE=0  # vscode mode
 PROJECT_DIR="$(pwd)"  # Default to current directory
-CONDA_ENV_DIR="/multiverse/storage/$(whoami)/conda_envs/"
+CONDA_ENV_DIR="/megaverse/storage/$(whoami)/conda_envs/"
 DOCKER_ARGS=""
 GPU_LIST=""  # Default to empty (no GPU restriction)
 CPU_LIST=""  # Default to empty (no CPU restriction)
@@ -41,7 +41,7 @@ print_help() {
     echo "  --image <image_name>       Specify the Docker image to use (default: cudrano/cuda-miniconda:latest)."
     echo "  --container_name <container_name>    Specify the name for the running container (default: run-docker's default)."
     echo "  --project <project_dir>    Path to the project directory to mount (default: current directory)."
-    echo "  --conda-envs <envs_dir>    Path to the directory where conda environments are stored (default: /multiverse/storage/<username>/conda_envs/)."
+    echo "  --conda-envs <envs_dir>    Path to the directory where conda environments are stored (default: /megaverse/storage/<username>/conda_envs/)."
     echo "  --docker-args <args>       Additional arguments to pass to Docker."
     echo "  --memory-limit <limit>     Specify the memory limit for the container (default: 32g)."
     echo "  --vscode                   Mounts vscode server folder in /vscode. To be used with vscode-enabled image."

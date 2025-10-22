@@ -4,7 +4,7 @@
 IMAGE_NAME="cudrano/cuda-miniconda:latest"
 CONTAINER_NAME="dynamic-user-container"
 PROJECT_DIR="$(pwd)"  # Default to the current directory
-CONDA_ENV_DIR="/multiverse/storage/cudrano/conda_envs/"  # Fixed path for Conda environments
+CONDA_ENV_DIR="/megaverse/storage/cudrano/conda_envs/"  # Fixed path for Conda environments
 DOCKER_ARGS=""
 
 # Help message
@@ -17,7 +17,7 @@ print_help() {
     echo "  --image <image_name>       Specify the Docker image to use (default: cudrano/cuda-miniconda:latest)."
     echo "  --name <container_name>    Specify the name for the running container (default: dynamic-user-container)."
     echo "  --project <project_dir>    Path to the project directory to mount (default: current directory)."
-    echo "  --conda-envs <envs_dir>    Path to the directory where conda environments are stored (default: /multiverse/storage/cudrano/conda_envs/)."
+    echo "  --conda-envs <envs_dir>    Path to the directory where conda environments are stored (default: /megaverse/storage/cudrano/conda_envs/)."
     echo "  -h, --help                 Show this help message."
     echo ""
     echo "Additional arguments can be passed directly to Docker, e.g., '-p 8080:8080'."

@@ -70,7 +70,7 @@ Usage: run-docker-conda [OPTIONS] <gpu-list> <cpu-list> <command>
 - **`--image <image_name>`**: Specify the Docker image to use (default: `<username>/cuda-miniconda:latest`).
 - **`--name <container_name>`**: Specify the name for the running container. If not provided, the default name set by `run-docker` will be used.
 - **`--project <project_dir>`**: Path to the project directory to mount in `/exp` (default: current directory, as with `run-docker`).
-- **`--conda-envs <envs_dir>`**: Path to the directory where your conda environments are stored (default: `/multiverse/storage/<username>/conda_envs/`). This is used to persist conda environments across runs.
+- **`--conda-envs <envs_dir>`**: Path to the directory where your conda environments are stored (default: `/megaverse/storage/<username>/conda_envs/`). This is used to persist conda environments across runs.
 - **`--docker-args <args>`**: Additional arguments to pass to Docker, as with `run-docker`. These can include port mappings, environment variables, or other Docker runtime options.
 - **`-h, --help`**: Show the help message detailing usage and options.
 
@@ -87,7 +87,7 @@ As for command `run-docker`:
 ### Using Conda Inside the Container
 
 In your container, you can use conda seemlessly to create new environmnets and update them over time. 
-Your conda environments are mounted in `/envs` inside your container, and permanently stored in storage (default: `/multiverse/storage/<username>/conda_envs/`). This ensures that any environments you create or modify will persist across container restarts.
+Your conda environments are mounted in `/envs` inside your container, and permanently stored in storage (default: `/megaverse/storage/<username>/conda_envs/`). This ensures that any environments you create or modify will persist across container restarts.
 
 #### Creating a New Conda Environment
 
